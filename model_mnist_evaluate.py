@@ -1,17 +1,18 @@
 import torch
-from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
 from torchvision.transforms import ToTensor, Normalize, Compose
 
-import neural_network
+from shared.mnist_neural_network import NeuralNetwork, train, test
+
 import sys
 
 if len(sys.argv) - 1 != 1:
-    print("usage: python evaluate.py <batch_size: 64>")
+    print("usage: python model_mnist_evaluate.py <batch_size: 64>")
     sys.exit(1)
 
 batch_size = int(sys.argv[1])
+model_name = "mnist"
 
 # Download test data from open datasets.
 test_data = datasets.MNIST(
@@ -32,8 +33,8 @@ for X, y in test_dataloader:
     print(f"Shape of y: {y.shape} {y.dtype}")
     break
 
-model = neural_network.NeuralNetwork()
-model.load_state_dict(torch.load(f"{neural_network.model_name}.pth"))
+model = NeuralNetwork()
+model.load_state_dict(torch.load(f"{model_name}.pth"))
 
 # verification
 model.eval()
