@@ -133,3 +133,5 @@ data/
 *.pth
 
 .idea/
+
+vit-base-beans/

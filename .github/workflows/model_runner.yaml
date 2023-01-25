@@ -13,6 +13,7 @@ on:
         options:
           - fashion
           - mnist
+          - beans
       batch_size:
         description: "batch size"
         default: "64"
