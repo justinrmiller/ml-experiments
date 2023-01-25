@@ -2,7 +2,7 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 from torchvision import datasets
-from torchvision.transforms import ToTensor
+from torchvision.transforms import ToTensor, Normalize, Compose
 
 import neural_network
 
@@ -12,22 +12,31 @@ if len(sys.argv) - 1 != 2:
     print("usage: python train.py <batch_size: 64> <epochs: 5>")
     sys.exit(1)
 
-model_name = "model_1"
 batch_size = int(sys.argv[1])
 epochs = int(sys.argv[2])
 
 # Download training data from open datasets.
-training_data = datasets.FashionMNIST(
+training_data = datasets.MNIST(
     root="data",
     train=True,
     download=True,
-    transform=ToTensor(),
+    transform=Compose([
+        ToTensor(),
+        Normalize(
+            (0.1307,), (0.3081,))
+        ]
+    )
 )
-test_data = datasets.FashionMNIST(
+test_data = datasets.MNIST(
     root="data",
     train=False,
     download=True,
-    transform=ToTensor(),
+    transform=Compose([
+        ToTensor(),
+        Normalize(
+            (0.1307,), (0.3081,))
+        ]
+    )
 )
 
 # Create data loaders.

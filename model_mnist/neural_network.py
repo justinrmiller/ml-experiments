@@ -1,6 +1,6 @@
 from torch import nn
 
-model_name = "model_1"
+model_name = "model_mnist"
 
 # Define model
 class NeuralNetwork(nn.Module):
