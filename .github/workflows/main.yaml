@@ -1,6 +1,24 @@
 name: Python package
 
-on: [push]
+# on: [push]
+
+# Allows you to run this workflow manually from the Actions tab
+on:
+  workflow_dispatch:
+    inputs:
+      model_name:
+        description: "model name"
+        default: "model_1"
+        type: "string"
+      batch_size:
+        description: "batch size"
+        default: "64"
+        type: "string"
+      epochs:
+        description: "epochs"
+        default: "5"
+        type: "string"
+
 
 jobs:
   build:
@@ -21,6 +39,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install flake8 pytest
           if [ -f model_1/requirements.txt ]; then pip install -r model_1/requirements.txt; fi
-      - name: Train and evaluate model
+      - name: Train model
         run: |
-          python model_1/main.py
+          python ${{ inputs.model_name }}/train.py ${{ inputs.batch_size }} ${{ inputs.epochs }}
+      - name: Evaluate model
+        run: |
+          python ${{ inputs.model_name }}/evaluate.py ${{ inputs.batch_size }}
